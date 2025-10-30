@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/script.js" defer></script> <!-- defer attribute tells js. file to wait until html is completelly loaded -->
+	<title>Shopping List</title> <!-- put the title at the end of this block -->
+</head>
+<body>
+
+	<header>
+
+		<!-- Main title on the page -->
+		<h1>Shopping List</h1>
+
+			<!-- First row to add new tasks -->
+			<div id="add-container">
+				<input type="text" id="task-input" placeholder="add a new task..."> <!-- placeholder is like to add a specification about that element -->
+				<input type="color" id="color-picker">
+				<button id="add-button">+</button>
+			</div>
+
+			<!-- Buttons to change view toggle -->
+			<div id="view-toggle-container"> <!-- two buttons to choose if you one one view or anotehr -->
+				<button id="list-view-button" class="toggle-btn">List view</button>
+				<button id="card-view-button" class="toggle-btn">Card view</button>
+			</div>
+	   
+	</header>
+	
+	<main>
+
+		<!-- box containing the shopping objects in list mode -->
+		<ul id="objects-list-container" class="list-view">
+			<li>Milk</li>
+			<li>Eggs</li>
+			<li>Cereal</li>
+			<li>Bread</li>
+		</ul>
+
+
+	</main>
+	
+	<footer>
+	    <nav></nav>
+	</footer>
+	
+</body>
+</html>

@@ -1,0 +1,108 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+h1 {
+  font-size: 3rem;
+
+}
+
+h2 {
+  font-size: 2rem;
+  color: #b5236c;
+  text-decoration: underline;
+}
+
+header {
+  background-color:#ffe9dc
+}
+
+a {
+  color:rgb(255, 255, 255);
+  background-color: rgb(64, 0, 255);
+  text-decoration: none;
+  text-align: center; 
+  
+  margin: 1rem auto;
+  padding: 1rem;
+
+  display: block;
+  width: 30%;
+  border-radius: 0.5rem;
+  border: 1px solid #190d4d;
+
+}
+
+a:hover {
+  background-color: aquamarine;
+  color:rgb(0, 30, 161)
+}
+
+#myFlexbox {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  margin: 1rem 2rem;
+}
+
+.box {
+  background-color: rgb(251, 255, 144);
+  border: 1px dashed #b5236c;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 40%;
+  height: 80px;
+  padding: 1rem;
+  margin: 0.5rem;
+}
+
+#special {
+  background-color: cyan;
+
+  text-align: center;
+
+}
+
+@media only screen and (min-width:600px) {
+  
+  /* body {
+    background-color: greenyellow;
+  } */
+
+  .box {
+    width: 40%;
+  }
+  
+}
+
+@media only screen and (min-width:780px) {
+  
+  /* body {
+    background-color: greenyellow;
+  } */
+
+  .box {
+    width: 25%;
+  }
+}

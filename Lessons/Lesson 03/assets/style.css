@@ -1,0 +1,175 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* will add this characteristics to the whole page */
+
+/* General rules */ 
+
+html { 
+	font-family: sans-serif;
+	background-color: rgb(254, 254, 244);
+}
+
+h1 {
+	text-align: center;
+	font-size: 3rem;
+	color: rgb(0, 0, 0);
+	font-weight: 800;
+	padding: 1rem;
+}
+
+/* this will remove all the initial settings from the css file */ 
+input, button {
+	border: none; 
+	background: none;
+	color: inherit;
+	outline: none; 
+	box-sizing: border-box;
+
+}
+
+button {
+	border-radius: 1.5rem;
+	border: 1px solid black;
+	padding: 1rem;
+
+}
+
+/* Input and add button */
+
+/* regarding the box containing the different elements, in this case the header box */
+/* select ids always with the # */
+#add-container {
+	display: flex; /* transforms the box into a flexbox. needs more info for further details */
+	gap: 1rem; /* gap between the two children in this containter */
+	padding: 1rem;
+	
+}
+
+/* this goes to take the specific input inside the add-container box and makes it occupy 100% of the space in the screen */
+#task-input {
+	width: 100%;
+	border: 1px solid black;
+	padding: 1rem;
+	background-color: white;
+	border-radius: 1.5rem; 
+
+}
+
+/* view list mode toggle */
+
+/* this acts directly to the second "box" that contains the titles of "list" and "card view" */
+#view-toggle-container {
+	display: flex;
+	gap: 1rem;
+	margin-bottom: 1rem;
+	padding: 0.5rem;  /* this goes to the container box and not on the button box */
+}	
+
+/* when writting to selected elements with a comma in between, the characteristics specified below will be applied to both 
+#list-view-button, #card-view-button {
+	background-color: rgb(243, 255, 240);
+
+} */
+
+/* this will sellect all the buttons that have this class selection and apply the characteristics to all of them */
+.toggle-btn {
+background-color: floralwhite;
+width: 50%;
+
+}
+
+/* objects on shopping list */
+
+/*card view */ 
+.card-view {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 1rem;
+}
+
+li {
+	display: block; 
+	/* being a list, the default setting from the browser is the display:list. 
+	Changing to block helps override this and allows all the elements to appear one below the other. */
+	width: 100%;
+	/* the width is intender for each element of the list */
+}
+
+.card-view li { 
+	background-color: rgb(255, 221, 142);
+	display: flex; /* activates flex table */
+	justify-content: center; /* aligns horizontally */ 
+	align-items: center; /* aligns vertically */
+	height: 2rem;
+	border:1px solid black; 
+	border-radius: 1.5rem;
+	padding: 1rem; /* between the text and the own box */
+	margin-bottom: 1rem; /* space between each button */
+
+}
+
+/* list view */
+
+.list-view {
+	border: 1px solid black; 
+	border-radius: 1.5rem;
+	padding: 1rem 2rem 1rem 2rem;
+	background-color: rgb(255, 230, 149);
+	margin: 1rem;
+
+}
+
+.list-view li {
+	height: 2rem;
+	display: list-item; /* we change this since in the browser the default is Block and it interferes with the padding of the elements inside this box */
+
+}
+
+/* buttons */ 
+
+/* general button rules */
+
+/* we can force the states to work with them on the dev tools from the browser by clicking right click over the button and doing the "force" and choosing the state */
+
+/* this will define how the cursor witll interact with specific buttons when you hover above them */ 
+button:hover {
+	cursor: pointer;
+}
+
+
+.toggle-btn:hover {
+	background-color: rgb(83, 125, 251);
+}
+
+.toggle-btn:active {
+	background-color: mediumblue;
+	color: white;
+
+}
+
+#add-button:hover {
+	background-color: rgb(255, 203, 169);
+}
+
+#add-button:active {
+	background-color: rgb(139, 46, 0);
+	color: white;
+}

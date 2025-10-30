@@ -1,0 +1,11 @@
+img {
+    width: 200px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.on-sale {
+    background-color: yellow;
+}

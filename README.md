@@ -4,6 +4,7 @@
 **Course ID**: **ID102.01**
 
 **Teachers**: Marco Lurati, Giovanni Profeta
+
 **Assistants**: Luca Draisci
 
 # Goals
