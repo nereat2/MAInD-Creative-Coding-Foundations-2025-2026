@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/script.js" defer></script>
+    <title>Yoga journal</title>
+</head>
+<body>
+
+    <header>
+
+        <!-- Main title on the page -->
+        <h1>Yoga journal</h1>
+
+        <!-- Secondary title -->
+        <h2>Yoga poses learned</h2>
+
+        <!-- First row to add new tasks -->
+        <div id="add-container">
+            <input type="text" id="text-input" placeholder="add a new pose...">
+            <input type="color" id="color-picker" value="#ffffff">
+            <button id="add-button">+</button>
+        </div>
+
+        <!-- Buttons to change view toggle -->
+        <div id="view-toggle-container">
+            <button id="button-list-view" class="toggle-btn">List view</button>
+            <button id="button-card-view" class="toggle-btn">Card view</button>
+        </div>
+
+    </header>
+
+    <main>
+
+        <!-- box containing the yoga poses in list mode -->
+        <ul id="poses-list-container" class="list-view">
+            <li>
+                <p>Mountain Pose</p>
+                <button class="remove-button">X</button>
+            </li>
+            <li>
+                <p>Downward Dog</p>
+                <button class="remove-button">X</button>
+            </li>
+            <li>
+                <p>Triangle Pose</p>
+                <button class="remove-button">X</button>
+            </li>
+            <li>
+                <p>Pigeon Pose</p>
+                <button class="remove-button">X</button>
+            </li>
+            <li>
+                <p>Warrior 2</p>
+                <button class="remove-button">X</button>
+            </li>
+            <li>
+                <p>Half Moon</p>
+                <button class="remove-button">X</button>
+            </li>
+        </ul>
+
+    </main>
+</body>
+
+</html>
