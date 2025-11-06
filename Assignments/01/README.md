@@ -9,14 +9,25 @@ Starting from the concept of a pinboard, implement a web page that:
 - allows the user to customize elements (i.e. colors, size)
 - allows the switch between two views (at least)
 
-![first screenshot](doc/mobile_card%20view.png)
-![second screenshot](doc/mobile_list%20view.png)
-![third screenshot](doc/tablet%20version.png)
-![fourth screenshot](doc/desktop%20version.png)
+![first screenshot](doc/assignment01_1.png)
+![second screenshot](doc/assignment01_2.png)
+![third screenshot](doc/assignment01_3.png)
+![fourth screenshot](doc/assignment01_4.png)
 
 ## Project Description
 
-This cute little website helps you track and organize the yoga poses you've learned. Add new poses to your collection and assign each one a custom color - whether to indicate difficulty level, pose type, or any system that works for you.
+Track and organize your yoga poses with custom color dots for difficulty, type, or style. View your progress, create a color legend, and switch between Flow and Grid views to visualize your journey. Keep practicing to grow your collection!
 
+## List of functions
 
-Toggle between list and card view to see your poses in different layouts. It is adviced to keep practicing regularly, or you'll need to remove poses from your list!
+- Add new poses with custom color dots
+
+- Pick colors to mark difficulty, type, or style
+
+- View progress and most-used color stats
+
+- Switch views between Flow (list) and Grid (card)
+
+- Create a color legend with meanings for each hue
+
+- Remove single poses or clear the entire list with confirmation

@@ -12,11 +12,57 @@
 
     <header>
 
-        <!-- Main title on the page -->
+         <!-- Main title on the page -->
         <h1>Yoga journal</h1>
 
-        <!-- Secondary title -->
-        <h2>Yoga poses learned</h2>
+        <!-- Description box -->
+        <div id="description-box">
+            <p>Track your yoga journey by adding poses you've learned. Assign each pose a custom color to organize them your way - by difficulty, type, or style. Toggle between list and card view to see your collection!</p>
+        </div>
+
+        <!-- Stats Box -->
+        <div id="stats-box">
+            <div class="stats-title">Your Progress</div>
+            <div class="stats-grid">
+
+                <div class="stat-item">
+                    <span class="stat-number" id="total-poses">6</span>
+                    <div class="stat-label">Total Poses</div>
+                </div>
+
+                <div class="stat-item">
+                    <span class="stat-number" id="favorite-color">
+                        <img src="assets/images/colorpicker.png" alt="color picker" class="color-icon">
+                    </span>
+                    <div class="stat-label">Most Used Color</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-label">Journey to Master 🧘‍♀️</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 30%;">30%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color legend box -->
+         <div id="legend-box">
+            <div class="stats-title">Color legend</div>
+            <div id="legend-items">
+
+         </div>
+            <div id="legend-add-container">
+                <input type="color" id="legend-color-picker" value="#ffffff">
+                <input type="text" id="legend-text-input" placeholder="What does this color mean?">
+                <button id="legend-add-btn">+</button>
+            </div>
+
+         </div>
+
+
+         <!-- Secondary title -->
+        <h2>Add down here your new yoga poses learned!</h2>
 
         <!-- First row to add new poses -->
         <div id="add-container">
@@ -27,8 +73,8 @@
 
         <!-- Buttons to change view toggle -->
         <div id="view-toggle-container">
-            <button id="button-list-view" class="toggle-btn">List view</button>
-            <button id="button-card-view" class="toggle-btn">Card view</button>
+            <button id="button-list-view" class="toggle-btn">Flow view</button>
+            <button id="button-card-view" class="toggle-btn">Grid view</button>
         </div>
 
     </header>
@@ -63,7 +109,22 @@
             </li>
         </ul>
 
+        <button id="clear-all-btn">🗑️ Clear All Poses</button>
+
     </main>
+
+    <!-- Modal per conferma -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: rgb(120, 8, 44); margin-bottom: 1rem;">⚠️ Are you sure?</h2>
+            <p style="margin-bottom: 1rem;">This will delete all your yoga poses. This action cannot be undone!</p>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="cancel-btn">Cancel</button>
+                <button class="modal-btn confirm" id="confirm-clear-btn">Yes, Clear All</button>
+            </div>
+        </div>
+    </div>
+    
 </body>
 
 </html>
