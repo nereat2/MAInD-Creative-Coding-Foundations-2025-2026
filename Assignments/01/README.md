@@ -20,14 +20,46 @@ Track and organize your yoga poses with custom color dots for difficulty, type, 
 
 ## List of functions
 
-- Add new poses with custom color dots
+1. addPose(name, color)
 
-- Pick colors to mark difficulty, type, or style
+Description: Creates and adds a new pose to the list with a small color dot and a remove button.
 
-- View progress and most-used color stats
+Returns: Nothing (updates the DOM and statistics).
 
-- Switch views between Flow (list) and Grid (card)
+2. removePose(element)
 
-- Create a color legend with meanings for each hue
+Arguments: element → the <li> element to remove.
 
-- Remove single poses or clear the entire list with confirmation
+Description: Deletes the selected pose and updates statistics.
+
+3. updateStats()
+
+Description: Updates total pose count, most-used color, and progress bar.
+
+Returns: Nothing (updates displayed data).
+
+4. switchView(mode)
+
+Arguments: mode → "list" or "card".
+
+Description: Toggles between Flow view and Grid view layouts.
+
+Returns: Nothing (changes CSS classes).
+
+5. clearAllPoses()
+
+Description: Displays a confirmation modal and, if confirmed, removes all poses from the list.
+
+6. addLegend(color, label)
+
+Arguments: color, label.
+
+Description: Adds a new color legend entry with a colored square and a description.
+
+Returns: Nothing (updates the Color Legend section).
+
+7. removeLegendItem(element)
+
+Arguments: element → the legend item to remove.
+
+Description: Removes a color entry from the Color Legend.
