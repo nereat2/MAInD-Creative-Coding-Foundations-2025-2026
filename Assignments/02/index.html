@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lynx Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/script.js" defer></script>
+</head>
+
+
+<body>
+        <header>
+            <h1>Lynx Game</h1>
+            <p id="game-intro">Spot the right image on the board.</p>
+            <p id="game-instructions">
+                Mouse: click a tile | Keyboard: press <strong>ENTER</strong> to confirm your choice
+            </p>
+            <p id="score-container">
+                Avatar: <span id="hud-avatar">
+            <img id="hud-avatar-img" src="" alt="" />
+            <span id="hud-avatar-name"></span>
+            </span>  |
+                Points: <span id="hud-score">0</span> |
+                Hearts: <span id="hud-lives">3</span> |
+                Time: <span id="hud-time">3</span>s
+            </p>
+        </header>
+
+
+    <main>
+        <!-- Start screen-->
+         <section id="start-screen">
+            <h2>Choose your avatar</h2>
+
+            <div id="avatar-list">
+
+                <button class="avatar-btn" data-avatar="explorer">
+                    <img src="docs/img/avatar-explorer.png" alt="Explorer">
+                    <span>Explorer</span>
+                </button>
+
+                <button class="avatar-btn" data-avatar="fairy">
+                    <img src="docs/img/avatar-fairy.png" alt="Fairy">
+                    <span>Fairy</span>
+                </button>
+
+                <button class="avatar-btn" data-avatar="alien">
+                    <img src="docs/img/avatar-alien.png" alt="Alien">
+                    <span>Alien</span>
+                </button>
+
+            </div>
+            <p class="note">
+                You start with 3 lives. In every round you have a few seconds to find the correct image.
+            </p>
+
+            <button id="start-button" disabled>Start Game!</button>
+         </section>
+
+        <!-- Game screen -->
+         <section id="game-screen" class="hidden">
+            <div id="target-box">
+                <p>Look for this image:</p>
+                <img id="target-image" src="" alt="Target Image">
+                <p id="target-name"></p>
+            </div>
+
+            <ul id="grid">
+                <!-- Grid made on JS -->
+            </ul>
+
+            <p id="message"></p>
+            <button id="back-to-menu-button">Back to menu</button>
+         </section>
+
+         <div id="end-overlay" class="hidden">
+            <div id="end-box">
+                <p id="end-text"></p>
+                <button id="end-menu-button">Back to menu</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- audio -->
+    <audio id="correct-sound" src="assets/audio/correct.wav" preload="auto"></audio>
+    <audio id="wrong-sound"   src="assets/audio/wrong.wav" preload="auto"></audio>
+    
+    <audio
+    id="bg-music"
+    src="assets/audio/background.wav"
+    loop
+    preload="auto"
+    ></audio>
+
+
+
+    
+</body>
+</html>
