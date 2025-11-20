@@ -26,7 +26,7 @@ time, mark, audio, video {
 }
 
 html {
-
+    font-size: 15px;
     font-family: "Baloo 2", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     text-align: center;
     background-color:  #2b0f77;
@@ -34,13 +34,12 @@ html {
 }
 
 
-.baloo-2-<uniquifier> {
+.baloo-2-uniquifier {
   font-family: "Baloo 2", sans-serif;
-  font-optical-sizing: auto;
+  /*font-optical-sizing: auto;*/
   font-weight: 500;
   font-style: normal;
 }
-
 
 
 body {
@@ -62,34 +61,67 @@ h1 {
     font-weight: 800;
     text-transform: uppercase;
     color: #f9fafb;
-
 }
 
 #game-intro {
     margin-bottom: 0.25rem;
-    font-size: 0.95rem;
+    font-size: 1.5rem;
     color: #e5e7eb;
 
 }
 
 #game-instructions {
-    font-size: 0.8rem;
+    font-size: 1.1rem;
     color: #cbd5f5;
+    margin: auto 3rem;
+
 }
 
 #game-instructions strong {
     color: #d793fd; 
 }
 
+
+#lives-container {
+    margin-top: 0.7rem;
+    padding: 0.3rem 0.5rem;
+    background-color: #8b2dc1;
+    max-width: 18rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+#timer-container {
+    margin-top: 0.7rem;
+    padding: 0.3rem 0.5rem;
+    background-color: #8b2dc1;
+    max-width: 18rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1rem;
+    color:white;
+    border: none;
+    border-radius: 5px;
+    font-family: "Baloo 2", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;  
+
+}
+
 #score-container {
     margin-top: 0.7rem;
     padding: 0.3rem 0.5rem;
-    background-color: #c12d9c;
-    max-width: 26rem;
+    background-color: #8b2dc1;
+    max-width: 18rem;
     margin-left: auto;
     margin-right: auto;
-    font-size: 0.85rem;
+    font-size: 1rem;
+    color:white;
+    border: none;
+    border-radius: 5px;
+    font-family: "Baloo 2", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;  
 }
+
 
 /* layout */ 
 
@@ -157,7 +189,6 @@ main {
 }
 
 
-
 .avatar-btn img {
     width: 100%;
     height: auto;
@@ -185,13 +216,15 @@ main {
 
 .note {
     font-size: 0.8rem;
-    margin-bottom: 0,7rem;
+    margin-bottom: 0.75rem;
+    margin-top: 0.75rem;
     color: #4c1d95; 
+    text-align: center;
 }
 
 #start-button {
     padding: 0.4rem 1.4rem;
-    margin-top: 1rem;
+    margin: 1rem auto;
     font-size: 1.5rem;
     border-radius: 999px;
     border: none;
@@ -206,6 +239,7 @@ main {
         transform 0.12s ease,
         box-shadow 0.12s ease, 
         filter 0.12s ease;
+    display: none;
    
 }
 
@@ -235,8 +269,6 @@ main {
     display: block;
     margin: 0.1rem auto;
     
-
-    
 }
 
 #target-name {
@@ -249,20 +281,19 @@ main {
 
 
 #grid {
-    margin-top: 0.2rem;
-    margin-bottom: 1.2rem;
+    margin: 0.2rem auto 1.2rem auto;
+    text-align: center;
     list-style: none;
     display: grid; 
-    grid-template-columns: repeat(5, minmax(50px, 1fr));
+    grid-template-columns: repeat(5, 1fr);
     gap: 0.5rem;
     justify-items: center;
-    
-
+    width: 100%
 }
 
 #grid li {
     width: 100%;
-    padding-top: 100%; /* square */ 
+    padding-top: 100%; 
     position: relative; 
     border-radius: 0.3rem;
     background-color: #bcc3f3;
@@ -285,14 +316,14 @@ main {
     border-color: #ec4899;
 }
 
-/* subtle wiggle */
+/* soft wiggle */
 @keyframes card-wiggle {
     0%   { transform: translateX(0) rotate(-2deg); }
     100% { transform: translateX(2px) rotate(2deg); }
 }
 
 
-/* slow rotation (for a few cards only!) */
+/* slow rotation */
 @keyframes shake {
     0% { transform: rotate(0); }
     25% { transform: rotate(3deg); }
@@ -315,12 +346,12 @@ main {
 }
 
 @keyframes slow-flip {
-    0%   { transform: rotateY(0); }
-    100% { transform: rotateY(360deg); }
+    0%   { transform: rotate3D(0,0,0,0); }
+    100% { transform: rotate3D(1, 1, 1, 180deg); }
 }
 
 #grid li.card-flip {
-    animation: slow-flip 4s ease-in-out infinite;
+    animation: slow-flip 1s linear infinite; /* ease-in-out */
 }
 
 /* message */
@@ -344,7 +375,7 @@ main {
     border: none;
     cursor: pointer;
 
-    /* Gradient: pink → electric blue */
+    
     background: linear-gradient(135deg, #ec4899, #38bdf8);
     color: #0b1120;
 
@@ -411,22 +442,7 @@ main {
 }
 
 
-/* media queries */ 
-
-@media (min-width: 600px) {
-    h1 {
-        font-size: 4rem;
-    }
-
-    #grid {
-        grid-template-columns: repeat(5, minmax(60px, 1fr));
-    }
-}
-
 @media (min-width: 780px) {
-    html {
-        font-size: 15px;
-    }
 
     h1 {
         font-size: 5rem;
@@ -438,22 +454,131 @@ main {
     }
 
     #grid {
-        gap: 0.6rem;
+        grid-template-columns: repeat(6, 1fr);
     }
+
+
 }
 
 @media (min-width: 1024px) {
-    html {
-        font-size: 15px;
-    }
 
+    /* LAYOUT: body a 2 colonne: sinistra = sidebar, destra = schermata (start o game) */
     body {
-        align-items: center;
+        display: grid;
+        column-gap: 3rem;
+        align-items: flex-start;
+        padding: 2rem 3rem;
     }
 
-    #start-screen,
+    /* header (tutto a sinistra) */
+    header {
+        grid-column: 1;
+        text-align: left;
+    }
+
+    h1 {
+        text-align: left;
+        margin-bottom: 0.5rem;
+        font-size: 150px;
+        line-height: .9em;
+    }
+
+    #game-intro,
+    #game-instructions {
+        text-align: left;
+        max-width: 380px;
+        margin: 0 0 0.5rem 0;
+    }
+
+    #lives-container {
+        margin: 0.5rem 0;
+        justify-content: flex-start;
+        width: fit content;
+        margin-left: 0;
+    }
+
+    #score-container {
+        text-align: left;
+        margin-left: 0;
+        margin-right: auto;
+        width: fit-content;
+        margin-bottom: 1rem;
+    }
+
+    /* MAIN (colonna destra: start-screen O game-screen) */
+    main {
+        grid-column: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;   
+    }
+
+    /* START SCREEN: carta a destra */
+    #start-screen {
+        max-width: 620px;
+        width: 100%;
+        /*height: 25rem;*/
+        margin-top: 5rem;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        
+    }
+
+    #start-screen h2 {
+        padding: 0.5rem 0;
+        text-align: center;
+        width: 100%;
+        font-size: 1.5rem;
+    }
+
+    #avatar-list {
+        margin-top: 3rem;
+    }
+
+     #avatar-list .avatar-btn img {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+    }
+
+    .note {
+        font-size: 1rem;
+        margin-top: 2.5rem;
+    }
+
+    #start-screen #start-button {
+        margin-top: 2rem;
+    }
+
+
+
+    /* GAME SCREEN: stessa posizione dello start-screen (destra, stessa larghezza) */
     #game-screen {
+        max-width: 620px;
+        width: 100%;
+        margin-top: 5rem;
+    }
+
+    /* GRID più grande su desktop */
+    #grid {
+        grid-template-columns: repeat(6, 1fr);
         max-width: 36rem;
+        /* margin-top: 1rem;
+        /* grid-template-columns: repeat(5, minmax(110px, 1fr)); */
+        /* gap: 0.75rem; */
+    }
+
+    /* TIMER in alto a destra */
+    #timer-container {
+        position: fixed;
+        top: 1.5rem;
+        right: 2rem;
+        z-index: 20;
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
     }
 }
+
+
 

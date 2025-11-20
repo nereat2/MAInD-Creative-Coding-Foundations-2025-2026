@@ -17,24 +17,34 @@
             <h1>Lynx Game</h1>
             <p id="game-intro">Spot the right image on the board.</p>
             <p id="game-instructions">
-                Mouse: click a tile | Keyboard: press <strong>ENTER</strong> to confirm your choice
+                Mouse: click a card | Keyboard: press <strong>SPACEBAR</strong> to move around the grid and arrive to your card!
+              
             </p>
-            <p id="score-container">
+            <p id="lives-container">
                 Avatar: <span id="hud-avatar">
             <img id="hud-avatar-img" src="" alt="" />
             <span id="hud-avatar-name"></span>
             </span>  |
-                Points: <span id="hud-score">0</span> |
-                Hearts: <span id="hud-lives">3</span> |
-                Time: <span id="hud-time">3</span>s
+                <!-- Points: <span id="hud-score">0</span> --> 
+                Lives: <span id="hud-lives">3</span> 
+                <!-- Time: <span id="hud-time">3</span>s -->
             </p>
+
+             <p id="timer-container">
+                Time: <span id="hud-time">3</span>s
+             </p>
+
+            <p id="score-container">
+                Points: <span id="hud-score">0</span>
+            </p>
+
         </header>
 
 
     <main>
         <!-- Start screen-->
          <section id="start-screen">
-            <h2>Choose your avatar</h2>
+            <h2>Choose your avatar to start the game</h2>
 
             <div id="avatar-list">
 
@@ -58,7 +68,7 @@
                 You start with 3 lives. In every round you have a few seconds to find the correct image.
             </p>
 
-            <button id="start-button" disabled>Start Game!</button>
+            <button id="start-button">Start Game!</button>
          </section>
 
         <!-- Game screen -->

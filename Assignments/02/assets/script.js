@@ -1,13 +1,13 @@
-// ===== SETTINGS =====
+// game settings
 
 // board 6 x 5 = 30 tiles
 const BOARD_COLUMNS = 6;
 const BOARD_ROWS = 5;
 const BOARD_SIZE = BOARD_COLUMNS * BOARD_ROWS;
 
-const START_LIVES = 3;          // 3 lives
-const BASE_ROUND_SECONDS = 3;   // starting seconds per round
-const WIN_POINTS = 10;          // when score reaches this, you "win"
+const START_LIVES = 3;          
+const BASE_ROUND_SECONDS = 3;   
+const WIN_POINTS = 10;         
 
 // Images for the cards
 const cardImages = [
@@ -58,28 +58,28 @@ const cardLabels = [
     "Hamster"
 ];
 
-// ===== SOUNDS =====
+// music and sounds
 
-const correctSound = new Audio("assets/audio/correct.wav");    // or .mp3
-const wrongSound   = new Audio("assets/audio/wrong.wav");      // or .mp3
+const correctSound = new Audio("assets/audio/correct.wav");    
+const wrongSound   = new Audio("assets/audio/wrong.wav"); 
 
 // background music
 const bgMusic = document.getElementById("bg-music");
 bgMusic.volume = 0.4;
 
-// ===== GAME STATE =====
+// game state
 
-let chosenAvatar = null;         // "explorer", "fairy", "alien"
+let chosenAvatar = null;         
 let score = 0;
 let lives = START_LIVES;
 
 let timeLeft = BASE_ROUND_SECONDS;
 let timerId = null;
 
-let targetCardIndex = 0;         // index in cardImages/cardLabels to find
-let selectedTile = null;         // DOM element of the selected tile
+let targetCardIndex = 0;        
+let selectedTile = null;         
 
-// ===== DOM ELEMENTS =====
+// DOM elements 
 
 const startScreen  = document.getElementById("start-screen");
 const gameScreen   = document.getElementById("game-screen");
@@ -102,25 +102,27 @@ const endOverlay    = document.getElementById("end-overlay");
 const endText       = document.getElementById("end-text");
 const endMenuButton = document.getElementById("end-menu-button");
 
-// ===== AVATAR SELECTION =====
+// avatar selection
 
 avatarButtons.forEach(function (button) {
     button.addEventListener("click", function () {
-        // remove old highlight
+        
         avatarButtons.forEach(function (btn) {
             btn.classList.remove("selected");
         });
 
-        // highlight the clicked one
+        // highlight the clicked card
         button.classList.add("selected");
         chosenAvatar = button.dataset.avatar;
+
+        startButton.style.display = 'block'
 
         // enable the start button
         startButton.disabled = false;
     });
 });
 
-// ===== START GAME BUTTON =====
+// start game button
 
 startButton.addEventListener("click", function () {
     if (!chosenAvatar) {
@@ -134,7 +136,7 @@ startButton.addEventListener("click", function () {
     startGame();
 });
 
-// ===== BACK TO MENU BUTTON =====
+// back to menu button & reset
 
 backToMenuButton.addEventListener("click", function () {
     goBackToMenu();
@@ -168,14 +170,17 @@ function goBackToMenu() {
     });
 
     // disable start button again
-    startButton.disabled = true;
+    // startButton.disabled = true;
+
+    startButton.style.display = 'none'
+
 
     // swap screens
     gameScreen.classList.add("hidden");
     startScreen.classList.remove("hidden");
 }
 
-// ===== END OVERLAY BUTTON =====
+// end overlay
 
 endMenuButton.addEventListener("click", function () {
     // hide overlay and go back to menu
@@ -183,7 +188,7 @@ endMenuButton.addEventListener("click", function () {
     goBackToMenu();
 });
 
-// ===== KEYBOARD: ENTER TO CONFIRM =====
+// keyboard
 
 document.addEventListener("keydown", function (event) {
     // only confirm selection when we are in the game screen
@@ -192,7 +197,25 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
-// ===== MAIN GAME FLOW =====
+
+// start game with spacebar 
+
+document.addEventListener("keydown", function (event) {
+    // only trigger if avatar is selected AND start screen is visible
+    if (event.code === "Space" && !startScreen.classList.contains("hidden")) {
+
+        if (!chosenAvatar) {
+            return; // can't start if avatar not selected
+        }
+
+        // mimic start button click
+        startScreen.classList.add("hidden");
+        gameScreen.classList.remove("hidden");
+        startGame();
+    }
+});
+
+// main game flow
 
 function startGame() {
     score = 0;
@@ -214,12 +237,9 @@ function startGame() {
 
     messageBox.innerHTML = "Click a tile, then press ENTER to confirm.";
 
-    // 🔊 start background music after user clicked Start
+    // start background music after user clicked Start
     bgMusic.currentTime = 0;
-    bgMusic.play().catch(function () {
-        // some browsers block autoplay, but since this is after a click
-        // it should normally be fine; ignore errors if any
-    });
+    bgMusic.play().catch(function () {});
 
     startRound();
 }
@@ -229,42 +249,47 @@ function startRound() {
     selectedTile = null;
     messageBox.innerHTML = "Pick a tile and then hit ENTER.";
 
-    pickTargetCard();  // choose which card to find
-    setRoundTime();    // set timeLeft based on score
-    buildGrid();       // build grid making sure target is there
-    startTimer();      // start countdown
+    // this is the order that he builds the grid and it should make it "pick the target car" first
+    //so it forces it to add at least 1 target card in the grid (otherwise I was finding sometimes the 
+    //target card wasn't present on the grid.)
+    setRoundTime();   
+    pickTargetCard();
+    buildGrid();       
+    startTimer();      
 }
 
-// ===== DIFFICULTY: TIME PER ROUND =====
+// timer & levels of difficulty
 
 function setRoundTime() {
-    if (score >= 7) {
+
+    if (score >= 3) {
         timeLeft = 3;        // very fast
-    } else if (score >= 3) {
-        timeLeft = 4;        // medium
-    } else {
+    } 
+    // else if (score >= 3 && ) {
+    //     timeLeft = 4;        // medium
+    // } 
+    else {
         timeLeft = BASE_ROUND_SECONDS;  // easy at the beginning
     }
     timeDisplay.innerHTML = timeLeft;
 }
 
-// ===== GRID =====
+// grid
 
 function buildGrid() {
     gridElement.innerHTML = "";
 
     const totalCards = cardImages.length;
-    const maxCopiesPerCard = 2; // each card will appear at most 2 times
+    const maxCopiesPerCard = 2; // each card cannot appear more than 2 times
 
     // we can use up to BOARD_SIZE cards, but at most totalCards
     const distinctCount = Math.min(totalCards, BOARD_SIZE);
 
-    // 1) Choose which card indexes will be used this round
-    // Always include the target card
+    // Choose which card indexes will be used this round
     const chosenSet = new Set();
     chosenSet.add(targetCardIndex);
 
-    // Add more random distinct cards until we have distinctCount
+    // Adds more random distinct cards until we have distinctCount
     while (chosenSet.size < distinctCount) {
         const randomIndex = Math.floor(Math.random() * totalCards);
         chosenSet.add(randomIndex);
@@ -272,7 +297,6 @@ function buildGrid() {
 
     const chosenIndices = Array.from(chosenSet);
 
-    // 2) Build cardIndices list with at most maxCopiesPerCard copies per chosen card
     const cardIndices = [];
     const counts = new Array(totalCards).fill(0);
 
@@ -284,10 +308,10 @@ function buildGrid() {
             cardIndices.push(cardIndex);
             counts[cardIndex]++;
         }
-        // if this card already has max copies, loop again and pick another
+        // if a card already has max copies, loop again and pick another
     }
 
-    // 3) Shuffle cardIndices so the target is in a random place
+    // Shuffle cardIndices so the target is in a random place
     for (let i = cardIndices.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         const temp = cardIndices[i];
@@ -295,7 +319,7 @@ function buildGrid() {
         cardIndices[j] = temp;
     }
 
-    // 4) Create the tiles on the grid
+    // Create the tiles on the grid
     for (let i = 0; i < BOARD_SIZE; i++) {
         const cardIndex = cardIndices[i];
 
@@ -314,23 +338,16 @@ function buildGrid() {
             img.classList.add("tilt-right");
         }
 
-        const sizeRandom = Math.floor(Math.random() * 3); // 0,1,2
-        if (sizeRandom === 1) {
-            img.classList.add("small");
-        } else if (sizeRandom === 2) {
-            img.classList.add("big");
-        }
-
         tile.appendChild(img);
 
-        // RANDOM MOVEMENT on some tiles
+        // random movement to create confusion
         const motionChance = Math.random();
         if (motionChance < 0.06) {
-            tile.classList.add("card-spin");    // 6%
+            tile.classList.add("card-spin");    
         } else if (motionChance < 0.12) {
-            tile.classList.add("card-flip");    // next 6%
+            tile.classList.add("card-flip");    
         } else if (motionChance < 0.18) {
-            tile.classList.add("card-shake");   // next 6%
+            tile.classList.add("card-shake");   
         }
 
         tile.addEventListener("click", function () {
@@ -341,10 +358,10 @@ function buildGrid() {
     }
 }
 
-// ===== CHOOSE TARGET CARD =====
+// choose target card
 
 function pickTargetCard() {
-    // pick a random card index from 0..cardImages.length-1
+    
     targetCardIndex = Math.floor(Math.random() * cardImages.length);
 
     targetImage.src = cardImages[targetCardIndex];
@@ -352,7 +369,7 @@ function pickTargetCard() {
     targetName.innerHTML = cardLabels[targetCardIndex];
 }
 
-// ===== TIMER =====
+// timer
 
 function startTimer() {
     // clear previous timer if any
@@ -372,12 +389,12 @@ function startTimer() {
 }
 
 function handleTimeout() {
-    messageBox.innerHTML = "⏰ Time's up! You lose one life.";
+    messageBox.innerHTML = "Time's up! You lose one life.";
     playWrong();
     loseLife();
 }
 
-// ===== TILE SELECTION & CHECK =====
+// tile selection and check
 
 function selectTile(tile) {
     // remove "selected" from all tiles
@@ -394,7 +411,7 @@ function selectTile(tile) {
 // called when user presses ENTER
 function confirmSelection() {
     if (!selectedTile) {
-        messageBox.innerHTML = "Choose a tile first 🙂";
+        messageBox.innerHTML = "Choose a tile first!";
         return;
     }
 
@@ -417,7 +434,8 @@ function confirmSelection() {
         messageBox.innerHTML = "Nice! New round coming…";
         playCorrect();
         setTimeout(startRound, 800);
-    } else {
+    } 
+    else {
         // wrong choice
         messageBox.innerHTML = "Nope, wrong one. You lose a life.";
         playWrong();
@@ -436,7 +454,7 @@ function loseLife() {
     }
 }
 
-// ===== END & RESTART =====
+// end and restart game
 
 function endGame(didWin) {
     clearInterval(timerId);
@@ -453,7 +471,7 @@ function endGame(didWin) {
     endOverlay.classList.remove("hidden");
 }
 
-// ===== SIMPLE SOUND HELPERS =====
+// sound
 
 function playCorrect() {
     if (!correctSound) return;

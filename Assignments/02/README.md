@@ -23,13 +23,15 @@ You begin selecting one of the three avatars available: the explorer, the fairy 
 
 I made the time be very fast, and the cards show the elements in a very similar visual style, so they are not too easy to spot right away. Moreover, I added some movement on the cards, so it confuses the player a bit more and it increases the difficulty. 
 
-Overall, it's a pretty simple game but quite fun! 
+I tried to add some more interactions on the keyboard, but honestly don't know how, maybe I'd try more new options with more time :) 
+
+Overall, the game it's pretty simple but quite fun! 
 
 ## Screenshots
 
-![second screenshot](docs/img/lynx_game_2.png)
-![third screenshot](docs/img/lynx_game_3.png)
-
+![second screenshot](docs/img/lynx_2.png)
+![third screenshot](docs/img/lynx_3.png)
+![fourth screenshot](docs/img/lynx_4.png)
 
 ## Flowchart
 
@@ -64,12 +66,7 @@ S12 --> S4
 
 ## Function list
 
-### document.addEventListener('keydown')
-
-It listens for key presses on the whole page.
-If the Enter key is pressed while the game screen is visible, it calls the function confirmSelection() to check the currently selected tile.
-
-### avatarButtons.forEach(... addEventListener('click'))
+### avatarButtons.forEach(function (button)
 
 It listens for a click on any avatar button.
 
@@ -86,11 +83,16 @@ If an avatar is selected, it:
 - shows the game screen (gameScreen.classList.remove('hidden'))
 - calls startGame() to initialize the match
 
+
 ### backToMenuButton.addEventListener('click')
 
-It listens for a click on the Back to menu button inside the game screen.
+- It listens for a click on the Back to menu button inside the game screen.
 
-Calls the function goBackToMenu() to reset the game and show the start screen again
+- It stops the timer if it's still running.
+
+- Calls the function goBackToMenu() to reset the game and show the start screen again.
+
+- It stops the background music & resents all the score, lives and time
 
 ### endMenuButton.addEventListener('click')
 
@@ -98,23 +100,13 @@ It listens for a click on the Back to menu button inside the end overlay (win/lo
 - Hides the end overlay (endOverlay.classList.add('hidden'))
 - Calls goBackToMenu() to reset the game and return to the start screen
 
-### goBackToMenu()
+### document.addEventListener('keydown')
 
-Parameters: none
-Return: none
+It listens for key presses on the whole page.
+If the Enter key is pressed while the game screen is visible, it calls the function confirmSelection() to check the currently selected tile.
 
-- Stops the timer if it is running (clearInterval(timerId))
-- Pauses the background music (bgMusic.pause())
-- Resets the main game state
-- Updates the HUD values on screen (score, lives, avatar, time, message)
-- Removes the selected class from all avatar buttons
-- Disables the Start game button again (startButton.disabled = true)
-- Hides the game screen and shows the start screen
 
 ### startGame()
-
-Parameters: none
-Return: none
 
 It starts a new match.
 
@@ -144,6 +136,19 @@ It sets how much time the player has for the current round, based on the current
 - Else → timeLeft = BASE_ROUND_SECONDS (easy at the beginning)
 
 Then updates the time shown in the HUD (timeDisplay).
+
+### goBackToMenu()
+
+Parameters: none
+Return: none
+
+- Stops the timer if it is running (clearInterval(timerId))
+- Pauses the background music (bgMusic.pause())
+- Resets the main game state
+- Updates the HUD values on screen (score, lives, avatar, time, message)
+- Removes the selected class from all avatar buttons
+- Disables the Start game button again (startButton.disabled = true)
+- Hides the game screen and shows the start screen
 
 ### buildGrid()
 
@@ -192,7 +197,7 @@ It starts the countdown for the current round.
 
 It is called when the player runs out of time.
 
-Shows the message: “⏰ Time's up! You lose one life.”
+Shows the message: “Time's up! You lose one life.”
 
 - Plays the wrong sound (playWrong())
 
@@ -212,7 +217,7 @@ It selects a tile in the grid.
 
 It is called when the player presses Enter and checks the chosen tile.
 
-If selectedTile is null, shows message “Choose a tile first 🙂” and returns
+If selectedTile is null, shows message “Choose a tile first” and returns
 
 - Stops the round timer (clearInterval(timerId))
 
@@ -275,4 +280,4 @@ Google Fonts - Baloo
 
 MixKit sounds
 
-Icons made with ChatGPT
+Icons made with ChatGPT and some coding advise too but I always try to redo it myself! :) 
