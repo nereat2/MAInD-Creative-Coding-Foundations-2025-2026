@@ -1,0 +1,584 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 15px;
+    font-family: "Baloo 2", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    text-align: center;
+    background-color:  #2b0f77;
+    color: #f9fafb;
+}
+
+
+.baloo-2-uniquifier {
+  font-family: "Baloo 2", sans-serif;
+  /*font-optical-sizing: auto;*/
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+body {
+    min-height: 100vh;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* header */ 
+
+header {
+    margin-bottom: 1.2rem;
+}
+
+h1 {
+    font-size: 5rem;
+    margin-bottom: 0.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #f9fafb;
+}
+
+#game-intro {
+    margin-bottom: 0.25rem;
+    font-size: 1.5rem;
+    color: #e5e7eb;
+
+}
+
+#game-instructions {
+    font-size: 1.1rem;
+    color: #cbd5f5;
+    margin: auto 3rem;
+
+}
+
+#game-instructions strong {
+    color: #d793fd; 
+}
+
+
+#lives-container {
+    margin-top: 0.7rem;
+    padding: 0.3rem 0.5rem;
+    background-color: #8b2dc1;
+    max-width: 18rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+#timer-container {
+    margin-top: 0.7rem;
+    padding: 0.3rem 0.5rem;
+    background-color: #8b2dc1;
+    max-width: 18rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1rem;
+    color:white;
+    border: none;
+    border-radius: 5px;
+    font-family: "Baloo 2", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;  
+
+}
+
+#score-container {
+    margin-top: 0.7rem;
+    padding: 0.3rem 0.5rem;
+    background-color: #8b2dc1;
+    max-width: 18rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1rem;
+    color:white;
+    border: none;
+    border-radius: 5px;
+    font-family: "Baloo 2", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;  
+}
+
+
+/* layout */ 
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+#start-screen, 
+#game-screen {
+    background-color: #ffffff;
+    border-radius: 0.4rem;
+    padding: 1rem;
+    max-width: 28rem;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(255, 123, 215, 0.781);
+    border: 1px solid #4c1d95;
+}
+
+.hidden {
+    display: none;
+}
+
+/* start screen */ 
+
+#start-screen h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.7rem;
+    color: #4c1d95;
+}
+
+#avatar-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    justify-content: center;
+    margin: 1rem 0;
+    
+}
+
+.avatar-btn {
+    border: 2px solid #4c1d95;
+    background-color: #fff;
+    border-radius: 0.4rem;
+    padding: 0.4rem;
+    cursor: pointer;
+    width: 7.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.8rem;
+    transition: 
+        background 0.12s ease,
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        border-color 0.12s ease;
+}
+
+.avatar-btn span {
+    color: #631089;       
+    font-weight: 600;     
+    font-size: 0.9rem;    
+}
+
+
+.avatar-btn img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 0.2rem;
+
+}
+
+.avatar-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(255, 123, 215, 0.781);
+}
+
+.avatar-btn-selected {
+    background: linear-gradient(135deg, #7090e0, #a080e0);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+    
+}
+
+#hud-avatar img {
+    height: 24px; 
+    vertical-align: middle;
+}
+
+.note {
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+    margin-top: 0.75rem;
+    color: #4c1d95; 
+    text-align: center;
+}
+
+#start-button {
+    padding: 0.4rem 1.4rem;
+    margin: 1rem auto;
+    font-size: 1.5rem;
+    border-radius: 999px;
+    border: none;
+    background-color: #4c1d95;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: 
+        opacity 0.12s ease,
+        transform 0.12s ease,
+        box-shadow 0.12s ease, 
+        filter 0.12s ease;
+    display: none;
+   
+}
+
+#start-button:disabled {
+    opacity: 0.5;
+    cursor: default;
+    transform: none;
+    box-shadow: none;
+    filter: grayscale(0.4);
+}
+
+#start-button:not(:disabled):hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* game screen */ 
+
+
+#target-box {
+    margin-bottom: 0.5rem;
+}
+
+#target-image {
+    max-width: 4rem;
+    max-height: 4rem;
+    display: block;
+    margin: 0.1rem auto;
+    
+}
+
+#target-name {
+    font-size: 0.9rem;
+    color: #9a0095;
+}
+
+
+/* grid */
+
+
+#grid {
+    margin: 0.2rem auto 1.2rem auto;
+    text-align: center;
+    list-style: none;
+    display: grid; 
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    justify-items: center;
+    width: 100%
+}
+
+#grid li {
+    width: 100%;
+    padding-top: 100%; 
+    position: relative; 
+    border-radius: 0.3rem;
+    background-color: #bcc3f3;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#grid li img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#grid li.selected {
+    outline: 3px solid #2200ff;
+    box-shadow:  0 0 2px #ec4899;
+    outline-offset: 2px;
+    border-color: #ec4899;
+}
+
+/* soft wiggle */
+@keyframes card-wiggle {
+    0%   { transform: translateX(0) rotate(-2deg); }
+    100% { transform: translateX(2px) rotate(2deg); }
+}
+
+
+/* slow rotation */
+@keyframes shake {
+    0% { transform: rotate(0); }
+    25% { transform: rotate(3deg); }
+    50% { transform: rotate(0); }
+    75% { transform: rotate(-3deg); }
+    100% { transform: rotate(0); }
+}
+
+#grid li.card-shake {
+    animation: shake 0.4s infinite;
+}
+
+@keyframes turn-medium {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+}
+
+#grid li.card-spin {
+    animation: turn-medium 3s linear infinite;
+}
+
+@keyframes slow-flip {
+    0%   { transform: rotate3D(0,0,0,0); }
+    100% { transform: rotate3D(1, 1, 1, 180deg); }
+}
+
+#grid li.card-flip {
+    animation: slow-flip 1s linear infinite; /* ease-in-out */
+}
+
+/* message */
+
+#message {
+    margin-top: 0.4rem;
+    min-height: 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #0037a5;
+}
+
+/* back to menu */
+
+#back-to-menu-button {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1.6rem;
+    font-size: 0.9rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+
+    
+    background: linear-gradient(135deg, #ec4899, #38bdf8);
+    color: #0b1120;
+
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+}
+
+#back-to-menu-button:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.45);
+}
+
+#back-to-menu-button:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: none;
+}
+
+
+/*  end screen */
+
+#end-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+}
+
+#end-overlay.hidden {
+    display: none;
+}
+
+#end-box {
+    background: #020617;
+    border-radius: 1rem;
+    padding: 1.5rem 2rem;
+    border: 2px solid #ec4899; /* pink border */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+    max-width: 18rem;
+}
+
+#end-text {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+#end-menu-button {
+    padding: 0.5rem 1.4rem;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, #ec4899, #383ef8);
+    color: #0b1120;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+
+@media (min-width: 780px) {
+
+    h1 {
+        font-size: 5rem;
+    }
+
+    #start-screen,
+    #game-screen {
+        max-width: 32rem;
+    }
+
+    #grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+
+}
+
+@media (min-width: 1024px) {
+
+    /* LAYOUT: body a 2 colonne: sinistra = sidebar, destra = schermata (start o game) */
+    body {
+        display: grid;
+        column-gap: 3rem;
+        align-items: flex-start;
+        padding: 2rem 3rem;
+    }
+
+    /* header (tutto a sinistra) */
+    header {
+        grid-column: 1;
+        text-align: left;
+    }
+
+    h1 {
+        text-align: left;
+        margin-bottom: 0.5rem;
+        font-size: 150px;
+        line-height: .9em;
+    }
+
+    #game-intro,
+    #game-instructions {
+        text-align: left;
+        max-width: 380px;
+        margin: 0 0 0.5rem 0;
+    }
+
+    #lives-container {
+        margin: 0.5rem 0;
+        justify-content: flex-start;
+        width: fit content;
+        margin-left: 0;
+    }
+
+    #score-container {
+        text-align: left;
+        margin-left: 0;
+        margin-right: auto;
+        width: fit-content;
+        margin-bottom: 1rem;
+    }
+
+    /* MAIN (colonna destra: start-screen O game-screen) */
+    main {
+        grid-column: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;   
+    }
+
+    /* START SCREEN: carta a destra */
+    #start-screen {
+        max-width: 620px;
+        width: 100%;
+        /*height: 25rem;*/
+        margin-top: 5rem;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        
+    }
+
+    #start-screen h2 {
+        padding: 0.5rem 0;
+        text-align: center;
+        width: 100%;
+        font-size: 1.5rem;
+    }
+
+    #avatar-list {
+        margin-top: 3rem;
+    }
+
+     #avatar-list .avatar-btn img {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+    }
+
+    .note {
+        font-size: 1rem;
+        margin-top: 2.5rem;
+    }
+
+    #start-screen #start-button {
+        margin-top: 2rem;
+    }
+
+
+
+    /* GAME SCREEN: stessa posizione dello start-screen (destra, stessa larghezza) */
+    #game-screen {
+        max-width: 620px;
+        width: 100%;
+        margin-top: 5rem;
+    }
+
+    /* GRID più grande su desktop */
+    #grid {
+        grid-template-columns: repeat(6, 1fr);
+        max-width: 36rem;
+        /* margin-top: 1rem;
+        /* grid-template-columns: repeat(5, minmax(110px, 1fr)); */
+        /* gap: 0.75rem; */
+    }
+
+    /* TIMER in alto a destra */
+    #timer-container {
+        position: fixed;
+        top: 1.5rem;
+        right: 2rem;
+        z-index: 20;
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
+    }
+}
+
+
+

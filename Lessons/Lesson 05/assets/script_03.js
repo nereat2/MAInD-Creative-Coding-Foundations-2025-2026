@@ -1,5 +1,6 @@
 const API_KEY = '80d1993378fa9e47ffc9c7fec53fe1d2'
-const API_URL = 'https://api.openweathermap.org/data/2.5/forecast?lat=42.2&lon=2.16&units=metric&appid=' + API_KEY
+const coordinates =  [42.2244, 2.1686];
+const API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates[0]}&lon=${coordinates[1]}&units=metric&appid=${API_KEY}`
 
 fetch(API_URL)
   .then(response => response.json()) 
@@ -7,12 +8,11 @@ fetch(API_URL)
   .catch(error => displayError(error));
 
   function displayData(data){
-    console.log(data)
-
-    
 
     const FORECAST = data.list;
-    console.log(FORECAST)
+    const cityName = data.city && data.city.name ? data.city.name : 'Campdevanol';
+
+    console.log(data.list[12])
 
     for (let item of FORECAST){
 
@@ -23,7 +23,7 @@ fetch(API_URL)
         
         const TEMP = item.main.temp;
 
-        console.log(DATE, TIME, TEMP)
+        //console.log(DATE, TIME, TEMP)
 
     }
 
