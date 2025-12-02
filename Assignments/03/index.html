@@ -8,62 +8,105 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
-    <script src="assets/script.js" defer></script>
+    <script src="assets/script_03.js" defer></script>
 </head>
 
 
 <body>
+        <!-- Navigation flying bar -->
+        <nav id="main-nav">
+            <button data-target="instructions">Instructions</button>
+            <button data-target="credits">Credits</button>
+        </nav>
+        <!-- Intro and avatar selection box -->
         <header>
-            <h1>Lynx Game</h1>
-            <p id="game-intro">Spot the right image on the board.</p>
-            <p id="game-instructions">
-                Mouse: click a card | Keyboard: press <strong>SPACEBAR</strong> to move around the grid and arrive to your card!
-              
-            </p>
+            <div id="intro-box">
+                <h1>Lynx Game 2.0</h1>
+
+                <p>Welcome to the Lynx Game! Choose your avatar below and hit the <strong>SPACE BAR</strong> to start the game.</p>
+                <br>
+                <p>In the meantime, enjoy this random cat facts below :)</p>
+
+            </div>
+
+            <div id="cat-fact-box">
+                <span class="fact-label">Did you know...</span>
+                <span id="cat-fact">Loading...</span>
+            </div>
+
+            <p id="avatar-container">
+                <img id="avatar-img" src="" alt="">
+            </p> 
+
             <p id="lives-container">
-                Avatar: <span id="hud-avatar">
-            <img id="hud-avatar-img" src="" alt="" />
-            <span id="hud-avatar-name"></span>
-            </span>  |
-                <!-- Points: <span id="hud-score">0</span> --> 
-                Lives: <span id="hud-lives">3</span> 
-                <!-- Time: <span id="hud-time">3</span>s -->
+                Lives: <span id="lives-box">3</span> 
             </p>
 
              <p id="timer-container">
-                Time: <span id="hud-time">3</span>s
+                Time: <span id="time-box">3</span>s
              </p>
 
             <p id="score-container">
-                Points: <span id="hud-score">0</span>
+                Points: <span id="score-box">0</span>
             </p>
 
         </header>
+
+        <!-- Instructions section -->
+        <div id="instructions-overlay" class="hidden">
+            <div id="instructions-box">
+                <h2>How to Play</h2>
+                <p>1. Pick your favorite lynx avatar.</p>
+                <p>2. Press SPACE or click Start Game to begin.</p>
+                <p>3. Find the matching cat on the grid.</p>
+                <p>4. Click the cat and press ENTER to confirm.</p>
+                <p>5. You lose a life if you're wrong or run out of time.</p>
+                <p>6. Reach 10 points to win.</p>
+
+            <button id="close-instructions">Close</button>
+            </div>
+        </div>
+
+        <!-- Credit section :)) -->
+        <div id="credits-overlay" class="hidden">
+            <div id="credits-box">
+                <h2>Credits</h2>
+
+                <img id="credits-cat" src="docs/img/morris.png" alt="My cat Morris">
+
+                <p>This game was proudly play-tested by Morris (who did absolutely nothing to help).</p>
+                <p>Also, the code broke like 40 times but we made it :)</p>
+
+                <p><strong>Made by:</strong> Nerea (& some INSTRUCTIVE help from my friend ChatGPT :))</p>
+                <p><strong>Cat images:</strong> TheCatAPI</p>
+                <p><strong>Cat facts:</strong> catfact.ninja</p>
+
+      <button id="close-credits">Close</button>
+  </div>
+</div>
+
 
 
     <main>
         <!-- Start screen-->
          <section id="start-screen">
-            <h2>Choose your avatar and a city to start the game</h2>
-
-            <label for="city-input">City:</label>
-            <input id="city-input" type="text" placeholder="Barcelona">
+            <h2>Choose your avatar to start the game</h2>
 
             <div id="avatar-list">
 
-                <button class="avatar-btn" data-avatar="explorer">
-                    <img src="docs/img/avatar-explorer.png" alt="Explorer">
-                    <span>Explorer</span>
+                <button class="avatar-btn" data-avatar="badass_lynx_avatar">
+                    <img src="docs/img/badass_lynx_avatar.png" alt="Badass Lynx">
+                    <span>Badass Lynx</span>
                 </button>
 
-                <button class="avatar-btn" data-avatar="fairy">
-                    <img src="docs/img/avatar-fairy.png" alt="Fairy">
-                    <span>Fairy</span>
+                <button class="avatar-btn" data-avatar="cute_lynx_avatar">
+                    <img src="docs/img/cute_lynx_avatar.png" alt="Cute Lynx">
+                    <span>Cute Lynx</span>
                 </button>
 
-                <button class="avatar-btn" data-avatar="alien">
-                    <img src="docs/img/avatar-alien.png" alt="Alien">
-                    <span>Alien</span>
+                <button class="avatar-btn" data-avatar="skater_lynx_avatar">
+                    <img src="docs/img/skater_lynx_avatar.png" alt="Sk8er Lynx">
+                    <span>Sk8er Lynx</span>
                 </button>
 
             </div>
@@ -77,9 +120,7 @@
         <!-- Game screen -->
          <section id="game-screen" class="hidden">
             <div id="target-box">
-                <p>Look for this image:</p>
                 <img id="target-image" src="" alt="Target Image">
-                <p id="target-name"></p>
             </div>
 
             <ul id="grid">
@@ -105,8 +146,9 @@
     
     <audio
     id="bg-music"
-    src="assets/audio/background.wav"
+    src="assets/audio/Nyan_Cat.mp3"
     loop
+    autoplay
     preload="auto"
     ></audio>
 

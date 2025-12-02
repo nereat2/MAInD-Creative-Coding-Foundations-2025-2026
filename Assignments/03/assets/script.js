@@ -1,10 +1,18 @@
-// const API_key = 'live_RCGXuhOXH9u3QCHNh5V4XA9uAGkyZU5onO64ksjgdPeTUU1VpV09xZn9lwFdLLG5' 
+const API_key = 'live_RCGXuhOXH9u3QCHNh5V4XA9uAGkyZU5onO64ksjgdPeTUU1VpV09xZn9lwFdLLG5' 
 const API = `https://api.thecatapi.com/v1/images/search?limit=22&api_key=${API_key}`
 
+let catPictures = [];
 
 fetch(API)  
     .then((response) => response.json())
-    .then((cats) => buildGrid(cats))
+    .then((cats) => {
+        catPictures = cats;
+        console.log("Cats loaded:", catPictures.length);
+    })
+    .catch((error) => {
+        console.error("Error loading cats:", error);
+    })
+
 
 
 // game settings
@@ -19,59 +27,6 @@ const BASE_ROUND_SECONDS = 3;
 const WIN_POINTS = 10;         
 
 
-let currentWeatherMain = null; // will define the weather of each screen
-let roundNumber = 0; // counts the rounds 
-const WEATHER_CHALLENGE_EVERY = 3; //every 3rd round is "special"
-
-// Images for the cards
-const cardImages = [
-    "docs/img/frog.png",
-    "docs/img/cat.png",
-    "docs/img/dog.png",
-    "docs/img/apple.png",
-    "docs/img/strawberry.png",
-    "docs/img/star.png",
-    "docs/img/tree.png",
-    "docs/img/rocket.png",
-    "docs/img/ghost.png",
-    "docs/img/koala.png",
-    "docs/img/hat.png",
-    "docs/img/icecream.png",
-    "docs/img/moon.png",
-    "docs/img/whale.png",
-    "docs/img/snake.png",
-    "docs/img/donut.png",
-    "docs/img/fish.png",
-    "docs/img/seal.png",
-    "docs/img/potato.png",
-    "docs/img/hamburger.png",
-    "docs/img/hamster.png"
-];
-
-const cardLabels = [
-    "Frog",
-    "Cat",
-    "Dog",
-    "Apple",
-    "Strawberry",
-    "Star",
-    "Tree",
-    "Rocket",
-    "Ghost",
-    "Koala",
-    "Hat",
-    "Icecream",
-    "Moon",
-    "Whale",
-    "Snake",
-    "Donut",
-    "Fish",
-    "Seal",
-    "Potato",
-    "Hamburger",
-    "Hamster"
-];
-
 // music and sounds
 
 const correctSound = new Audio("assets/audio/correct.wav");    
@@ -80,6 +35,23 @@ const wrongSound   = new Audio("assets/audio/wrong.wav");
 // background music
 const bgMusic = document.getElementById("bg-music");
 bgMusic.volume = 0.4;
+
+// Try to start music as soon as the page loads
+document.addEventListener("DOMContentLoaded", function () {
+    bgMusic.play().catch(() => {
+        // If the browser blocks autoplay, start it on first interaction instead
+        const resumeMusic = () => {
+            bgMusic.play().catch(() => {});
+            document.removeEventListener("click", resumeMusic);
+            document.removeEventListener("keydown", resumeMusic);
+        };
+
+        document.addEventListener("click", resumeMusic);
+        document.addEventListener("keydown", resumeMusic);
+    });
+});
+
+
 
 // game state
 
@@ -91,7 +63,9 @@ let timeLeft = BASE_ROUND_SECONDS;
 let timerId = null;
 
 let targetCardIndex = 0;        
-let selectedTile = null;         
+let selectedTile = null; 
+
+let roundNumber = 0;
 
 // DOM elements 
 
@@ -120,7 +94,7 @@ const endMenuButton = document.getElementById("end-menu-button");
 
 avatarButtons.forEach(function (button) {
     button.addEventListener("click", function () {
-        
+
         avatarButtons.forEach(function (btn) {
             btn.classList.remove("selected");
         });
@@ -143,6 +117,11 @@ startButton.addEventListener("click", function () {
         return;
     }
 
+    if (!catPictures || catPictures.length === 0) {
+        messageBox.innerHTML = "Loading cats...";
+        return;
+    }
+
     // switch screens
     startScreen.classList.add("hidden");
     gameScreen.classList.remove("hidden");
@@ -161,9 +140,6 @@ function goBackToMenu() {
     if (timerId) {
         clearInterval(timerId);
     }
-
-    // stop background music
-    bgMusic.pause();
 
     // reset basic state
     selectedTile = null;
@@ -205,15 +181,6 @@ endMenuButton.addEventListener("click", function () {
 });
 
 // keyboard
-
-document.addEventListener("keydown", function (event) {
-    // only confirm selection when we are in the game screen
-    if (event.key === "Enter" && !gameScreen.classList.contains("hidden")) {
-        confirmSelection();
-    }
-});
-
-
 // start game with spacebar 
 
 document.addEventListener("keydown", function (event) {
@@ -243,19 +210,14 @@ function startGame() {
     timeDisplay.innerHTML = timeLeft;
 
     // Format avatar name with capital letter
-    const avatarNiceName = chosenAvatar.charAt(0).toUpperCase() + chosenAvatar.slice(1);
+    const avatarName = chosenAvatar.charAt(0).toUpperCase() + chosenAvatar.slice(1);
 
     // Update avatar HUD: image + name
     document.getElementById("hud-avatar-img").src = `docs/img/avatar-${chosenAvatar}.png`;
-    document.getElementById("hud-avatar-img").alt = avatarNiceName;
-    document.getElementById("hud-avatar-name").innerHTML = avatarNiceName;
-
+    document.getElementById("hud-avatar-img").alt = avatarName;
+    document.getElementById("hud-avatar-name").innerHTML = avatarName;
 
     messageBox.innerHTML = "Click a tile, then press ENTER to confirm.";
-
-    // start background music after user clicked Start
-    bgMusic.currentTime = 0;
-    bgMusic.play().catch(function () {});
 
     startRound();
 }
@@ -272,120 +234,80 @@ function startRound() {
     //target card wasn't present on the grid.)
     setRoundTime();   
     pickTargetCard();
-    buildGrid();       
+    buildGrid(catPictures);       
     startTimer();      
 }
 
 // timer & levels of difficulty
 
-let baseTime = 0; 
 function setRoundTime() {
 
-     // sets difficulty based on score 
-    
-    if (score < 3) {
-        baseTime = 5;
-    } else if (score < 7) {
-        baseTime = 4; 
-    } else { 
-        baseTime = 3;
-    }
-
-    const isWeatherChallenge = currentWeatherMain && (roundNumber % WEATHER_CHALLENGE_EVERY === 0);
-
-    if (isWeatherChallenge) {
-        let extraMessage = "";
-
-        if (currentWeatherMain === "Rain" || currentWeatherMain === "Drizzle" || currentWeatherMain === "Thunderstorm") {
-            baseTime -= 1;
-            extraMessage = "It's + currentWeatherMain.toLowerCase()" + " today, you have less time!";
-        } else if (currentWeatherMain === "Clear") {
-            baseTime += 1; 
-            extraMessage = "Sunny bonus round! You get a bit more time this round.";
-        } else {
-            extraMessage = "Weather round:" + currentWeatherMain + ".";
-        }
-        messageBox.innerHTML = extraMessage;
-    }
+    if (score >= 3) {
+        timeLeft = 3;        // very fast
+    }  
     else {
-        
-        messageBox.innerHTML = "Round" + roundNumber + ". Pick a tile and then press SPACE BAR";
+        timeLeft = BASE_ROUND_SECONDS;  // easy at the beginning
     }
-    
-} 
-
-let finalTime = Math.max(2,Math.min(6, baseTime));{ 
-
-    timeLeft = finalTime;
     timeDisplay.innerHTML = timeLeft;
-
 }
+
 
 // grid
 
 function buildGrid(cats) {
-    console.log(cats)
-    console.log(cats.length)
+    console.log(cats);
+    console.log(cats.length);
 
     gridElement.innerHTML = "";
 
-    const totalCards =  cardImages.length; // cats.length; // 
-    const maxCopiesPerCard = 2; // each card cannot appear more than 2 times
-
-    // we can use up to BOARD_SIZE cards, but at most totalCards
-    const distinctCount = Math.min(totalCards, BOARD_SIZE);
-
-    // Choose which card indexes will be used this round
-    const chosenSet = new Set();
-    chosenSet.add(targetCardIndex);
-
-    // Adds more random distinct cards until we have distinctCount
-    while (chosenSet.size < distinctCount) {
-        const randomIndex = Math.floor(Math.random() * totalCards);
-        chosenSet.add(randomIndex);
+    if (!cats || cats.length === 0) {
+        console.log("No cats provided to buildGrid");
+        return;
     }
 
-    const chosenIndices = Array.from(chosenSet);
+    const totalCats = cats.length;
+    const maxCopiesPerCat = 2;
 
-    const cardIndices = [];
-    const counts = new Array(totalCards).fill(0);
+    // This array will hold the indexes of the cats we want to show
+    const catIndexesForGrid = [];
 
-    while (cardIndices.length < BOARD_SIZE) {
-        const randomIndex = Math.floor(Math.random() * chosenIndices.length);
-        const cardIndex = chosenIndices[randomIndex];
+    // Keep track of how many times we've used each cat
+    const copiesUsed = new Array(totalCats).fill(0);
 
-        if (counts[cardIndex] < maxCopiesPerCard) {
-            cardIndices.push(cardIndex);
-            counts[cardIndex]++;
+    // 1. Make sure the target cat appears at least once
+    catIndexesForGrid.push(targetCardIndex);
+    copiesUsed[targetCardIndex] = 1;
+
+    // 2. Fill the rest of the grid with random cats,
+    //    but never more than 2 copies of the same cat
+    while (catIndexesForGrid.length < BOARD_SIZE) {
+        const randomIndex = Math.floor(Math.random() * totalCats);
+
+        if (copiesUsed[randomIndex] < maxCopiesPerCat) {
+            catIndexesForGrid.push(randomIndex);
+            copiesUsed[randomIndex]++;
         }
-        // if a card already has max copies, loop again and pick another
     }
 
-    // Shuffle cardIndices so the target is in a random place
-    for (let i = cardIndices.length - 1; i > 0; i--) {
+    // 3. Shuffle the array so the target is in a random position
+    for (let i = catIndexesForGrid.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        const temp = cardIndices[i];
-        cardIndices[i] = cardIndices[j];
-        cardIndices[j] = temp;
+        const tmp = catIndexesForGrid[i];
+        catIndexesForGrid[i] = catIndexesForGrid[j];
+        catIndexesForGrid[j] = tmp;
     }
 
-    // Create the tiles on the grid
+    // 4. Create the tiles on the grid
     for (let i = 0; i < BOARD_SIZE; i++) {
-        const cardIndex = cardIndices[i];
+        const catIndex = catIndexesForGrid[i];
+        const cat = cats[catIndex];
 
         const tile = document.createElement("li");
-        tile.dataset.cardIndex = cardIndex;
+        tile.dataset.cardIndex = catIndex; // used later in confirmSelection
 
         const img = document.createElement("img");
-
-        try{
-            img.src = cats[cardIndex].url; // cardImages[cardIndex];
-            img.alt = cats[cardIndex].ID; //cardLabels[cardIndex];
-        }
-        catch {
-
-        }
-            
+        img.src = cat.url;
+        img.alt = cat.id || "Cat";
 
         // add confusion: random rotation/size
         const tiltRandom = Math.floor(Math.random() * 3); // 0,1,2
@@ -400,11 +322,9 @@ function buildGrid(cats) {
         // random movement to create confusion
         const motionChance = Math.random();
         if (motionChance < 0.06) {
-            tile.classList.add("card-spin");    
-        } else if (motionChance < 0.12) {
-            tile.classList.add("card-flip");    
+            tile.classList.add("card-spin");
         } else if (motionChance < 0.18) {
-            tile.classList.add("card-shake");   
+            tile.classList.add("card-shake");
         }
 
         tile.addEventListener("click", function () {
@@ -418,12 +338,11 @@ function buildGrid(cats) {
 // choose target card
 
 function pickTargetCard() {
-    
-    targetCardIndex = Math.floor(Math.random() * cardImages.length);
 
-    targetImage.src = cardImages[targetCardIndex];
-    targetImage.alt = cardLabels[targetCardIndex];
-    targetName.innerHTML = cardLabels[targetCardIndex];
+    targetCardIndex = Math.floor(Math.random() * catPictures.length);
+
+    targetImage.src = targetCat.url;
+    targetImage.alt = targetCat.id || "Cat";
 }
 
 // timer
@@ -482,7 +401,7 @@ function confirmSelection() {
         scoreDisplay.innerHTML = score;
 
         if (score >= WIN_POINTS) {
-            messageBox.innerHTML = "Insuperable! You found them all.";
+            messageBox.innerHTML = "Great! You found them all.";
             playCorrect();
             endGame(true); // win
             return;
@@ -517,7 +436,7 @@ function endGame(didWin) {
     clearInterval(timerId);
 
     // stop the music on end screen
-    bgMusic.pause();
+    // bgMusic.pause();
 
     if (didWin) {
         endText.innerHTML = "Congrats, you won! Final points: " + score;
